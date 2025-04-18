@@ -2,13 +2,24 @@
 def agregar_producto(nombre, precio, cantidad):
     for producto in productos:
         if producto["Nombre"] == nombre:
-            print(f"{nombre} ya existe dentro de los productos almacenados.")
+            producto["Cantidad"] += cantidad
+            print("\nProducto ya existente. Se le ha sumado la cantidad que ingresó.")
             return
     producto = {"Nombre": nombre,
                 "Precio": precio,
                 "Cantidad": cantidad}
     productos.append(producto)
     print("\nProducto añadido correctamente.")
+
+def consultar_producto(nombre):
+    for producto in productos:
+        if producto["Nombre"] == nombre:
+            print(f"\nNombre: {producto["Nombre"]}")
+            print(f"Precio: {producto["Precio"]}")
+            print(f"Cantidad: {producto["Cantidad"]}")
+            return
+    print(f"\nError. El producto "{nombre}" no se encuentra en la lista de productos almacenados.")
+
 
 productos = []
 
@@ -66,7 +77,16 @@ while True:
             agregar_producto(nombre, precio, cantidad)
 
         case 2:
-            print("uno")
+            
+            while True:
+                nombre = input("\nIngrese el nombre del producto que desea buscar en el inventario: ").strip().lower()
+                if nombre == "":
+                    print("\nError. El nombre del producto no puede estar vacío.")
+                else:
+                    break
+            
+            consultar_producto(nombre)
+
         case 3:
             print("uno")
         case 4:
