@@ -18,7 +18,22 @@ def consultar_producto(nombre):
             print(f"Precio: {producto["Precio"]}")
             print(f"Cantidad: {producto["Cantidad"]}")
             return
-    print(f"\nError. El producto "{nombre}" no se encuentra en la lista de productos almacenados.")
+    print(f"\nError. El producto '{nombre}' no se encuentra en la lista de productos almacenados.")
+
+def actualizar_precio(nombre, precio):
+    for producto in productos:
+        if producto["Nombre"] == nombre:
+            producto["Precio"] = precio
+            print("\nPrecio actualizado correctamente.")
+            return
+    print(f"\nError. El producto '{nombre}' no se encuentra en la lista de productos almacenados.")
+
+def eliminar_producto(nombre):
+    for producto in productos:
+        if producto["Nombre"] == nombre:
+            productos.remove(producto)
+            print(f"\nProducto '{nombre}' eliminado correctamente.")
+            return
 
 
 productos = []
@@ -88,9 +103,38 @@ while True:
             consultar_producto(nombre)
 
         case 3:
-            print("uno")
+
+            while True:
+                nombre = input("\nIngrese el nombre del producto: ").strip().lower()
+                if nombre == "":
+                    print("\nError. El nombre del producto no puede estar vacío.")
+                else:
+                    break
+
+            while True:
+                try:
+                    precio = input("\nIngrese el precio actualizado del producto: ")
+                    precio = float(precio)
+                    if precio <= 0:
+                        print("\nError. El precio del producto debe ser mayor a 0.")
+                    else:
+                        break
+                except ValueError:
+                    print("\nError. El precio del producto debe ser un número.")
+            
+            actualizar_precio(nombre, precio)
+
         case 4:
-            print("uno")
+            
+            while True:
+                nombre = input("\nIngrese el nombre del producto que desea eliminar: ").strip().lower()
+                if nombre == "":
+                    print("\nError. El nombre del producto no puede estar vacío.")
+                else:
+                    break
+            
+            eliminar_producto(nombre)
+
         case 5:
             print(f"\n{productos}")
         case 6:
