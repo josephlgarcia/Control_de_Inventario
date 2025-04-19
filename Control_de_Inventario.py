@@ -35,6 +35,8 @@ def eliminar_producto(nombre):
             print(f"\nProducto '{nombre}' eliminado correctamente.")
             return
 
+total_del_inventario = lambda: sum(producto["Precio"] * producto["Cantidad"] for producto in productos)
+
 
 productos = []
 
@@ -136,11 +138,15 @@ while True:
             eliminar_producto(nombre)
 
         case 5:
-            print(f"\n{productos}")
+
+            print(f"\n{'Nombre':<20} {'Precio':20} {'Cantidad':<20}")
+            print("-" * 60)
+            for producto in productos:
+                print(f"{producto['Nombre']:<20} {producto['Precio']:<20.2f} {producto['Cantidad']:<20}")
+
+            print(f"\nEl total del costo del inventario es: ${total_del_inventario():.2f}")
+
         case 6:
             break
         case _:
             print("\nError. Ingrese un número entre 1 y 6 segun la opción que desea")
-
-
-    
