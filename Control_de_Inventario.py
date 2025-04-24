@@ -1,4 +1,28 @@
 
+def validacion_de_entrada(mensaje, tipo):
+    while True:
+        try:
+            if tipo == "str":
+                entrada = input(mensaje).strip()
+                if not entrada:
+                    print("\nError. El nombre del producto no puede estar vacío.")
+                else:                   
+                    return entrada.lower()
+            if tipo == "float":
+                entrada = float(input(mensaje))
+                if entrada <= 0:
+                    print("\nError. El precio del producto debe ser mayor a 0.")
+                else:                   
+                    return entrada
+            if tipo == "int":
+                entrada = int(input(mensaje))
+                if entrada <= 0:
+                    print("\nError. La cantidad del producto debe ser mayor a 0.")
+                else:
+                    return entrada
+        except ValueError:
+            print("\nError. Ingrese un caracter válido.")
+
 def agregar_producto(nombre, precio, cantidad):
     for producto in productos:
         if producto["Nombre"] == nombre:
@@ -37,7 +61,6 @@ def eliminar_producto(nombre):
 
 total_del_inventario = lambda: sum(producto["Precio"] * producto["Cantidad"] for producto in productos)
 
-
 productos = []
 
 while True:
@@ -49,95 +72,38 @@ while True:
     print("5. Calcular valor total del inventario")
     print("6. Salir")
 
-    while True:
-        try:
-            opcion = input("\nIngrese la opción que desea ejecutar: ")
-            opcion = int(opcion) 
-            break
-        except ValueError:
-            print("\nError. Ingrese un número válido segun la opción que desea")
+    opcion = input("\nIngrese una opción: ")
 
-        
     match opcion:
 
-        case 1:
+        case "1":
 
-            while True:
-                nombre = input("\nIngrese el nombre del producto: ").strip().lower()
-                if nombre == "":
-                    print("\nError. El nombre del producto no puede estar vacío.")
-                else:
-                    break
-
-            while True:
-                try:
-                    precio = input("\nIngrese el precio del producto: ")
-                    precio = float(precio)
-                    if precio <= 0:
-                        print("\nError. El precio del producto debe ser mayor a 0.")
-                    else:
-                        break
-                except ValueError:
-                    print("\nError. El precio del producto debe ser un número.")
-
-            while True:
-                try:
-                    cantidad = input("\nIngrese la cantidad del producto: ")
-                    cantidad = int(cantidad)
-                    if cantidad <= 0:
-                        print("\nError. La cantidad del producto debe ser mayor a 0.")
-                    else:
-                        break
-                except ValueError:
-                    print("\nError. La cantidad del producto debe ser un número entero.")
+            nombre = validacion_de_entrada("\nIngrese el nombre del producto: ", "str")
+            precio = validacion_de_entrada("\nIngrese el precio del producto: ", "float")
+            cantidad = validacion_de_entrada("\nIngrese la cantidad del producto: ", "int")
             
             agregar_producto(nombre, precio, cantidad)
 
-        case 2:
+        case "2":
             
-            while True:
-                nombre = input("\nIngrese el nombre del producto que desea buscar en el inventario: ").strip().lower()
-                if nombre == "":
-                    print("\nError. El nombre del producto no puede estar vacío.")
-                else:
-                    break
+            nombre = validacion_de_entrada("\nIngrese el nombre del producto: ", "str")
             
             consultar_producto(nombre)
 
-        case 3:
+        case "3":
 
-            while True:
-                nombre = input("\nIngrese el nombre del producto: ").strip().lower()
-                if nombre == "":
-                    print("\nError. El nombre del producto no puede estar vacío.")
-                else:
-                    break
-
-            while True:
-                try:
-                    precio = input("\nIngrese el precio actualizado del producto: ")
-                    precio = float(precio)
-                    if precio <= 0:
-                        print("\nError. El precio del producto debe ser mayor a 0.")
-                    else:
-                        break
-                except ValueError:
-                    print("\nError. El precio del producto debe ser un número.")
+            nombre = validacion_de_entrada("\nIngrese el nombre del producto: ", "str")
+            precio = validacion_de_entrada("\nIngrese el precio del producto: ", "float")
             
             actualizar_precio(nombre, precio)
 
-        case 4:
+        case "4":
             
-            while True:
-                nombre = input("\nIngrese el nombre del producto que desea eliminar: ").strip().lower()
-                if nombre == "":
-                    print("\nError. El nombre del producto no puede estar vacío.")
-                else:
-                    break
+            nombre = validacion_de_entrada("\nIngrese el nombre del producto: ", "str")
             
             eliminar_producto(nombre)
 
-        case 5:
+        case "5":
 
             print(f"\n{'Nombre':<20} {'Precio':20} {'Cantidad':<20}")
             print("-" * 60)
@@ -146,7 +112,8 @@ while True:
 
             print(f"\nEl total del costo del inventario es: ${total_del_inventario():.2f}")
 
-        case 6:
+        case "6":
+            print("\nGracias por usar nuesto sistema de control de inventario\n")
             break
         case _:
             print("\nError. Ingrese un número entre 1 y 6 segun la opción que desea")
