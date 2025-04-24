@@ -25,41 +25,41 @@ def validacion_de_entrada(mensaje, tipo):
 
 def agregar_producto(nombre, precio, cantidad):
     for producto in productos:
-        if producto["Nombre"] == nombre:
-            producto["Cantidad"] += cantidad
+        if producto['Nombre'] == nombre:
+            producto['Cantidad'] += cantidad
             print("\nProducto ya existente. Se le ha sumado la cantidad que ingresó.")
             return
-    producto = {"Nombre": nombre,
-                "Precio": precio,
-                "Cantidad": cantidad}
+    producto = {'Nombre': nombre,
+                'Precio': precio,
+                'Cantidad': cantidad}
     productos.append(producto)
     print("\nProducto añadido correctamente.")
 
 def consultar_producto(nombre):
     for producto in productos:
-        if producto["Nombre"] == nombre:
-            print(f"\nNombre: {producto["Nombre"]}")
-            print(f"Precio: {producto["Precio"]}")
-            print(f"Cantidad: {producto["Cantidad"]}")
+        if producto['Nombre'] == nombre:
+            print(f"\nNombre: {producto['Nombre']}")
+            print(f"Precio: {producto['Precio']}")
+            print(f"Cantidad: {producto['Cantidad']}")
             return
     print(f"\nError. El producto '{nombre}' no se encuentra en la lista de productos almacenados.")
 
 def actualizar_precio(nombre, precio):
     for producto in productos:
-        if producto["Nombre"] == nombre:
-            producto["Precio"] = precio
+        if producto['Nombre'] == nombre:
+            producto['Precio'] = precio
             print("\nPrecio actualizado correctamente.")
             return
     print(f"\nError. El producto '{nombre}' no se encuentra en la lista de productos almacenados.")
 
 def eliminar_producto(nombre):
     for producto in productos:
-        if producto["Nombre"] == nombre:
+        if producto['Nombre'] == nombre:
             productos.remove(producto)
             print(f"\nProducto '{nombre}' eliminado correctamente.")
             return
 
-total_del_inventario = lambda: sum(producto["Precio"] * producto["Cantidad"] for producto in productos)
+total_del_inventario = lambda: sum(producto['Precio'] * producto['Cantidad'] for producto in productos)
 
 productos = []
 
@@ -105,12 +105,15 @@ while True:
 
         case "5":
 
-            print(f"\n{'Nombre':<20} {'Precio':20} {'Cantidad':<20}")
-            print("-" * 60)
-            for producto in productos:
-                print(f"{producto['Nombre']:<20} {producto['Precio']:<20.2f} {producto['Cantidad']:<20}")
+            if not productos:
+                print("\nNo hay productos en el inventario.")
+            else:
+                print(f"\n{'Nombre':<20} {'Precio':20} {'Cantidad':<20}")
+                print("-" * 60)
+                for producto in productos:
+                    print(f"{producto['Nombre']:<20} {producto['Precio']:<20.2f} {producto['Cantidad']:<20}")
 
-            print(f"\nEl total del costo del inventario es: ${total_del_inventario():.2f}")
+                print(f"\nEl total del costo del inventario es: ${total_del_inventario():.2f}")
 
         case "6":
             print("\nGracias por usar nuesto sistema de control de inventario\n")
